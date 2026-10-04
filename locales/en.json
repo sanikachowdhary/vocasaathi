@@ -1,0 +1,175 @@
+{
+  "app": {
+    "name": "VocaSaathi",
+    "tagline": "Helping families choose skills with confidence.",
+    "subtitle": "Evidence-backed vocational counselling for learners and families.",
+    "demoMode": "Demo Mode Active",
+    "illustrativeBadge": "Illustrative Hackathon Dataset",
+    "disclaimer": "This is an SIH prototype. Data is seeded for demonstration and not official government statistics."
+  },
+  "nav": {
+    "home": "Home",
+    "counselling": "Family Counselling",
+    "exploreTrades": "Explore Trades",
+    "providers": "Training Providers",
+    "compare": "Compare Careers",
+    "counsellorPortal": "Counsellor Portal",
+    "adminPortal": "Admin Analytics",
+    "about": "About & Mission",
+    "startCounselling": "Start Counselling"
+  },
+  "hero": {
+    "badge": "Smart India Hackathon Prototype",
+    "title": "Choosing a career is a family decision.",
+    "description": "VocaSaathi helps learners and parents explore vocational careers together using local outcome data, NSQF career pathways, and evidence-backed AI counselling.",
+    "startCta": "Start Family Counselling",
+    "exploreCta": "Explore Career Evidence",
+    "demoFamilyCta": "Load Demo Family (Pune)",
+    "stat1": "10+ Verified Trades",
+    "stat1Sub": "Empirical salary & pathway data",
+    "stat2": "Bilingual Engine",
+    "stat2Sub": "English & मराठी naturally supported",
+    "stat3": "Human-in-the-Loop",
+    "stat3Sub": "Automated counsellor escalation"
+  },
+  "concerns": {
+    "title": "Why families hesitate",
+    "subtitle": "Most career platforms ignore parents' natural anxieties. VocaSaathi answers them with verified evidence.",
+    "income": {
+      "title": "Income & Stagnation",
+      "question": "Will this career provide a stable and growing income?"
+    },
+    "jobSecurity": {
+      "title": "Job Security",
+      "question": "Will there actually be formal jobs available near us?"
+    },
+    "socialStatus": {
+      "title": "Social Perception",
+      "question": "Is vocational education respected in our community vs a degree?"
+    },
+    "careerGrowth": {
+      "title": "Career Growth",
+      "question": "Can my child grow into managerial roles beyond the first job?"
+    },
+    "higherEducation": {
+      "title": "Higher Education",
+      "question": "Can they continue studying for a degree or diploma later?"
+    },
+    "safety": {
+      "title": "Workplace Safety",
+      "question": "Is the workplace safe, regulated, and inclusive?"
+    }
+  },
+  "pillars": {
+    "title": "What VocaSaathi does",
+    "subtitle": "A structured three-step bridge between learner aspirations and family confidence.",
+    "card1Title": "1. Understand",
+    "card1Desc": "Capture both the learner's interests and the parents' deepest financial, social, and safety concerns.",
+    "card2Title": "2. Explain with Evidence",
+    "card2Desc": "Answer tough family questions using local placement rates, median salary benchmarks, and NSQF progression ladders.",
+    "card3Title": "3. Connect to Humans",
+    "card3Desc": "Seamlessly escalate unresolved dilemmas to certified vocational counsellors with pre-packaged case intelligence."
+  },
+  "howItWorks": {
+    "title": "How it works",
+    "subtitle": "Six simple steps to family clarity",
+    "step1": "1. Tell us about your family",
+    "step2": "2. Share your main concern",
+    "step3": "3. Explore verified evidence",
+    "step4": "4. Compare pathways & degrees",
+    "step5": "5. Make an informed decision",
+    "step6": "6. Talk to a counsellor if needed"
+  },
+  "onboarding": {
+    "title": "Family Profile & Context Setup",
+    "subtitle": "Tell us who is exploring skills so we can provide tailored local evidence.",
+    "loadDemo": "⚡ Load Demo Family (Pune 12th Pass)",
+    "demoLoadedAlert": "Demo family loaded: Rohan (19 yrs, 12th pass, Pune, Income concern). Ready to start!",
+    "step1Title": "Who is participating in this session?",
+    "step2Title": "Learner's current education qualification",
+    "step3Title": "What industry sectors interest the learner?",
+    "step4Title": "Where are you located?",
+    "step5Title": "Approximate annual household income bracket",
+    "step6Title": "Preferred conversation language",
+    "step7Title": "What is the primary family concern?",
+    "stateLabel": "State",
+    "districtLabel": "District",
+    "nameLabel": "Learner / Family Name",
+    "ageLabel": "Learner Age",
+    "next": "Continue",
+    "back": "Back",
+    "startSession": "Enter Counselling Session"
+  },
+  "counselling": {
+    "contextTitle": "Family Context",
+    "resistanceTitle": "Family Resistance Level",
+    "resistanceExplainer": "Calculated metric based on parental concerns and evidence acceptance.",
+    "chatTitle": "Family Counselling Room",
+    "evidenceTitle": "Evidence & Pathway Deck",
+    "inputPlaceholder": "Ask a question (e.g., 'Will my child get a job near Pune?' or 'Degree vs ITI?')...",
+    "send": "Ask",
+    "listening": "Listening...",
+    "listenAudio": "Listen",
+    "stopAudio": "Stop Audio",
+    "quickQuestions": "Common Family Questions:",
+    "talkToCounsellor": "Talk to a Human Counsellor",
+    "viewCareerPathway": "View Interactive Career Pathway",
+    "compareTrades": "Compare with Other Trades",
+    "noEvidenceYet": "Evidence cards will automatically appear here as questions are answered.",
+    "badgeIllustrative": "Illustrative Hackathon Dataset",
+    "escalationPrompt": "Some decisions need a human conversation. Would you like to connect with a certified counsellor?"
+  },
+  "evidence": {
+    "placementRate": "Placement Rate",
+    "medianEarnings": "Starting Median",
+    "nsqfLevel": "NSQF Level",
+    "duration": "Course Duration",
+    "entryReq": "Entry Qualification",
+    "experiencedPay": "Experienced Pay (3-5 yrs)",
+    "demand": "Market Demand",
+    "source": "Evidence Source",
+    "period": "Data Period",
+    "safety": "Workplace Safety",
+    "gender": "Gender & Inclusivity",
+    "viewDetails": "View Full Details",
+    "exploreProviders": "Find Nearby Providers"
+  },
+  "escalation": {
+    "modalTitle": "Request a Human Counsellor",
+    "modalSubtitle": "Our verified vocational counsellor will call your family with the complete session context.",
+    "name": "Contact Person Name",
+    "phone": "Mobile Number",
+    "time": "Preferred Time to Call",
+    "language": "Preferred Language",
+    "mainDilemma": "Main Unresolved Question",
+    "submit": "Submit Counsellor Request",
+    "successTitle": "Counsellor Request Created!",
+    "caseId": "Your Case Reference ID",
+    "summaryMsg": "Your full conversation transcript and evidence deck have been transferred to the counsellor queue.",
+    "close": "Return to Counselling"
+  },
+  "compare": {
+    "title": "Compare Vocational Pathways",
+    "subtitle": "Evaluate up to 3 trades side-by-side across empirical outcome metrics and progression ladders.",
+    "selectTrade": "Select Trade to Compare",
+    "learnerFit": "How this fits your family context",
+    "parameter": "Parameter",
+    "clearAll": "Reset Selection"
+  },
+  "admin": {
+    "title": "VocaSaathi — Programme Insights & Administrator Analytics",
+    "subtitle": "Live aggregated insights for state skilling missions & vocational policy planners.",
+    "kpiFamilies": "Families Counselled",
+    "kpiActive": "Active Sessions",
+    "kpiHighResistance": "High Resistance Cases",
+    "kpiEscalations": "Human Escalations",
+    "kpiAvgReduction": "Avg. Resistance Reduction",
+    "kpiLanguages": "Bilingual Marathi Share",
+    "chart1Title": "Resistance Score: Before vs After Evidence",
+    "chart2Title": "Top Parental Objections Breakdown",
+    "chart3Title": "District-wise Resistance & Escalation Rate",
+    "chart4Title": "Trade Popularity vs Starting Median Salary",
+    "insightsTitle": "AI-Generated Programme Insights",
+    "heatmapTitle": "Where is Parental Resistance Concentrated in Maharashtra?"
+  }
+}

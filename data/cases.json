@@ -1,0 +1,141 @@
+[
+  {
+    "id": "CASE-MH-2026-084",
+    "sessionId": "sess-2026-001",
+    "familyName": "Deshmukh Family",
+    "learnerName": "Rohan Deshmukh",
+    "learnerAge": 19,
+    "education": "12th Pass (Science)",
+    "contactNumber": "+91 98234 11092",
+    "preferredLanguage": "mr",
+    "preferredContactTime": "Evening (5:00 PM – 7:00 PM)",
+    "district": "Pune",
+    "state": "Maharashtra",
+    "priority": "High",
+    "status": "New",
+    "primaryConcern": "social_status",
+    "initialResistance": 72,
+    "resistanceScore": 41,
+    "transcriptSummary": "Father prefers traditional 3-year B.Sc degree due to family prestige, while Rohan wishes to pursue ITI Electrician & Solar PV. AI answered starting salary (₹19.5K median) and degree ladder (B.Voc / Lateral Diploma). Family requested direct human counsellor to discuss local college admission cutoff deadlines vs ITI admission dates.",
+    "detectedObjections": [
+      "Degree vs ITI Social Status Stigma",
+      "Lateral Diploma Entry Feasibility",
+      "Government Electrical Contractor Licensing Rules"
+    ],
+    "evidenceShown": [
+      "Electrician & Industrial Wiring (Placement 82%, Median ₹19,500)",
+      "Solar PV Installation (Placement 85%, Median ₹21,000)",
+      "Govt ITI Aundh & Govt Polytechnic Pune"
+    ],
+    "recommendedActions": [
+      "Explain the lateral entry quota to Govt Polytechnic Pune for top ITI scorers.",
+      "Highlight local Chakan/Bhosari industrial apprentice demand with stipend.",
+      "Clarify that B.Voc is a UGC-recognized 3-year degree on par with B.Sc."
+    ],
+    "notes": "Father seemed receptive to data regarding MSME licensing after 3 years. Needs empathetic reassurance regarding neighborhood perception.",
+    "createdAt": "2026-10-02T10:35:00Z",
+    "lastUpdated": "2026-10-02T10:35:00Z"
+  },
+  {
+    "id": "CASE-MH-2026-079",
+    "sessionId": "sess-2026-005",
+    "familyName": "More Family",
+    "learnerName": "Suresh More",
+    "learnerAge": 21,
+    "education": "10th Pass",
+    "contactNumber": "+91 94220 87341",
+    "preferredLanguage": "mr",
+    "preferredContactTime": "Morning (10:00 AM – 12:00 PM)",
+    "district": "Satara",
+    "state": "Maharashtra",
+    "priority": "Urgent",
+    "status": "In Review",
+    "primaryConcern": "higher_education",
+    "initialResistance": 78,
+    "resistanceScore": 48,
+    "transcriptSummary": "Family is concerned that starting with Automotive & EV mechanic course will prevent Suresh from ever completing a formal Diploma or Engineering degree later. AI explained NSQF Level 4-to-6 pathway.",
+    "detectedObjections": [
+      "Higher Education Dead-ends",
+      "Workplace Safety with High-Voltage EVs"
+    ],
+    "evidenceShown": [
+      "Automotive Service & EV (Placement 80%, Median ₹19,000)",
+      "Govt ITI Satara"
+    ],
+    "recommendedActions": [
+      "Walk through DTE Maharashtra lateral entry circular for ITI passouts.",
+      "Share ARAI certified workshop apprenticeship details in Satara MIDC."
+    ],
+    "notes": "Counsellor Ramesh assigned. Scheduled call for tomorrow 11 AM.",
+    "createdAt": "2026-10-04T08:55:00Z",
+    "lastUpdated": "2026-10-04T09:15:00Z"
+  },
+  {
+    "id": "CASE-MH-2026-072",
+    "sessionId": "sess-2026-007",
+    "familyName": "Jadhav Family",
+    "learnerName": "Vikram Jadhav",
+    "learnerAge": 20,
+    "education": "10th Pass",
+    "contactNumber": "+91 97654 33219",
+    "preferredLanguage": "mr",
+    "preferredContactTime": "Afternoon (2:00 PM – 4:00 PM)",
+    "district": "Chhatrapati Sambhajinagar",
+    "state": "Maharashtra",
+    "priority": "Normal",
+    "status": "Contacted",
+    "primaryConcern": "social_status",
+    "initialResistance": 82,
+    "resistanceScore": 52,
+    "transcriptSummary": "Family was hesitant about rooftop solar installation safety and relocation to larger cities. Discussed local solar parks in Marathwada region.",
+    "detectedObjections": [
+      "Workplace Safety at Heights",
+      "Relocation away from home district",
+      "Social perception"
+    ],
+    "evidenceShown": [
+      "Solar PV Installation & Green Energy Tech",
+      "Marathwada Skill Centre CSN"
+    ],
+    "recommendedActions": [
+      "Explain safety harness certification standards.",
+      "Highlight local Marathwada solar park maintenance jobs."
+    ],
+    "notes": "Contacted mother on Oct 4. Discussed local training options in Chikalthana MIDC. Sent brochure.",
+    "createdAt": "2026-10-04T11:40:00Z",
+    "lastUpdated": "2026-10-04T12:10:00Z"
+  },
+  {
+    "id": "CASE-MH-2026-065",
+    "sessionId": "sess-2026-003",
+    "familyName": "Shinde Family",
+    "learnerName": "Amit Shinde",
+    "learnerAge": 20,
+    "education": "12th Pass (Commerce)",
+    "contactNumber": "+91 98901 44520",
+    "preferredLanguage": "mr",
+    "preferredContactTime": "Anytime",
+    "district": "Nashik",
+    "state": "Maharashtra",
+    "priority": "Normal",
+    "status": "Resolved",
+    "primaryConcern": "income",
+    "initialResistance": 80,
+    "resistanceScore": 32,
+    "transcriptSummary": "Initial heavy skepticism regarding CNC Machinist salary trajectory compared to bank clerical jobs. Counsellor showed IGTR tool design progression. Family enrolled Amit in Govt ITI Nashik.",
+    "detectedObjections": [
+      "Starting Salary vs B.Com Jobs",
+      "Factory working conditions"
+    ],
+    "evidenceShown": [
+      "CNC Machine Operator & Precision Tooling",
+      "Govt ITI Nashik"
+    ],
+    "recommendedActions": [
+      "Case resolved successfully with ITI admission confirmation."
+    ],
+    "notes": "Candidate joined CNC batch at Satpur MIDC ITI. Parents satisfied with apprenticeship stipend confirmation.",
+    "createdAt": "2026-10-01T14:00:00Z",
+    "lastUpdated": "2026-10-03T16:45:00Z"
+  }
+]
