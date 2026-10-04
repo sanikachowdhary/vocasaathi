@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/lib/i18n/context";
 import { FamilyProfile, ObjectionCategory } from "@/lib/types";
@@ -17,6 +17,8 @@ import {
   ArrowRight,
   ArrowLeft,
   CheckCircle2,
+  FolderOpen,
+  PlusCircle,
   HelpCircle
 } from "lucide-react";
 
@@ -27,20 +29,91 @@ export default function CounsellingOnboardingPage() {
 
   const [step, setStep] = useState(1);
   const [profile, setProfile] = useState<FamilyProfile>(DEFAULT_DEMO_FAMILY);
+  const [savedFamilies, setSavedFamilies] = useState<FamilyProfile[]>([]);
   const [isDemoLoaded, setIsDemoLoaded] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    const existing = SessionStorageManager.getFamilies();
+    setSavedFamilies(existing);
+    const active = SessionStorageManager.getProfile();
+    if (active) {
+      setProfile(active);
+    }
+  }, []);
 
   const handleLoadDemoFamily = () => {
-    setProfile(DEFAULT_DEMO_FAMILY);
+    const demo: FamilyProfile = {
+      ...DEFAULT_DEMO_FAMILY,
+      id: "fam-rohan-pune",
+      updatedAt: new Date().toISOString(),
+    };
+    setProfile(demo);
     setLanguage("mr");
-    SessionStorageManager.saveProfile(DEFAULT_DEMO_FAMILY);
+    SessionStorageManager.saveProfile(demo);
     SessionStorageManager.saveResistance(72);
     setIsDemoLoaded(true);
   };
 
-  const handleStartSession = () => {
-    SessionStorageManager.saveProfile(profile);
-    SessionStorageManager.saveResistance(72);
-    router.push("/counselling/session");
+  const handleSelectSavedFamily = (famId: string) => {
+    const found = savedFamilies.find((f) => f.id === famId);
+    if (found) {
+      setProfile(found);
+      SessionStorageManager.saveProfile(found);
+      setIsDemoLoaded(true);
+    }
+  };
+
+  const handleCreateNewProfile = () => {
+    const newProfile: FamilyProfile = {
+      id: `fam-${Date.now()}`,
+      userType: "learner_parent",
+      learnerName: "",
+      learnerAge: 18,
+      education: "12th Pass (Science)",
+      locationState: "Maharashtra",
+      locationDistrict: "Pune",
+      incomeBracket: "₹2–5 lakh",
+      primaryInterest: "Electrical & Technology",
+      preferredLanguage: language,
+      primaryConcern: "income",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    setProfile(newProfile);
+    setStep(1);
+    setIsDemoLoaded(false);
+  };
+
+  const handleStartSession = async () => {
+    setIsSaving(true);
+    try {
+      // 1. Save family profile to local storage & server persistent store
+      const savedFamily = SessionStorageManager.saveFamily(profile);
+
+      // 2. Create a persistent session record
+      const sessionId = `sess-${Date.now()}`;
+      SessionStorageManager.saveSession({
+        id: sessionId,
+        familyId: savedFamily.id,
+        profile: savedFamily,
+        initialResistance: 72,
+        currentResistance: 72,
+        objectionsDetected: [savedFamily.primaryConcern],
+        tradesDiscussed: ["trade-electrician"],
+        messages: [],
+        status: "active",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      });
+
+      router.push("/counselling/session");
+    } catch (e) {
+      console.error("Error starting session:", e);
+      router.push("/counselling/session");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const updateProfile = (fields: Partial<FamilyProfile>) => {
@@ -49,35 +122,67 @@ export default function CounsellingOnboardingPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 space-y-6">
-      {/* Top Banner: Load Demo Family Shortcut for SIH Judges */}
-      <div className="bg-gradient-to-r from-emerald-900 to-slate-900 text-white p-5 rounded-2xl border border-emerald-700/60 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* Top Banner: Quick Action & Saved Profiles Switcher */}
+      <div className="bg-gradient-to-r from-emerald-900 via-slate-900 to-slate-950 text-white p-5 rounded-3xl border border-slate-800 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="space-y-1 text-center sm:text-left">
-          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-300 bg-amber-950/60 px-2.5 py-0.5 rounded-full border border-amber-500/30">
-            <Zap className="w-3.5 h-3.5 text-amber-400" />
-            SIH Demo Fast-Track
-          </span>
+          <div className="flex items-center gap-2 justify-center sm:justify-start">
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
+              <Zap className="w-3.5 h-3.5 text-emerald-400" />
+              {isMarathi ? "जलद सुरुवात" : "Quick Start"}
+            </span>
+            {savedFamilies.length > 1 && (
+              <span className="text-[11px] text-slate-400 font-medium">
+                {savedFamilies.length} {isMarathi ? "कुटुंबे जतन केली आहेत" : "saved profiles"}
+              </span>
+            )}
+          </div>
           <h2 className="text-base sm:text-lg font-black text-white">
-            {isMarathi ? "पुणे १२वी उत्तीर्ण डेमो कुटुंब" : "Instant SIH Demo Family Setup"}
+            {isMarathi ? "कुटुंबाची माहिती भरा किंवा नमुना प्रोफाइल निवडा" : "Setup Family Profile or Use Sample"}
           </h2>
           <p className="text-xs text-slate-300">
-            {isMarathi
-              ? "रोहन (वय १९, १२वी उत्तीर्ण, पुणे, ₹२-५ लाख, इलेक्ट्रिकल आवड, पगाराची चिंता)"
-              : "Rohan Deshmukh (19 yrs, 12th Pass, Pune, ₹2–5L, Electrical, Income objection)"}
+            {profile.learnerName
+              ? `${profile.learnerName} (${profile.learnerAge} yrs, ${profile.education}, ${profile.locationDistrict})`
+              : isMarathi ? "१२वी उत्तीर्ण, पुणे जिल्हा" : "12th Pass, Pune District"}
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={handleLoadDemoFamily}
-          className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-amber-500 text-slate-950 hover:bg-amber-400 shadow-md hover:scale-105 transition-all"
-        >
-          <Zap className="w-4 h-4 text-slate-950 fill-current" />
-          <span>{t("onboarding.loadDemo")}</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          {savedFamilies.length > 1 && (
+            <select
+              value={profile.id || ""}
+              onChange={(e) => handleSelectSavedFamily(e.target.value)}
+              className="px-3 py-2 rounded-xl bg-slate-800 text-white text-xs font-bold border border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            >
+              {savedFamilies.map((f) => (
+                <option key={f.id} value={f.id}>
+                  {f.learnerName || "Candidate"} ({f.locationDistrict})
+                </option>
+              ))}
+            </select>
+          )}
+
+          <button
+            type="button"
+            onClick={handleLoadDemoFamily}
+            className="flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl font-bold text-xs bg-emerald-600 text-white hover:bg-emerald-500 shadow-sm transition-all"
+          >
+            <Zap className="w-3.5 h-3.5" />
+            <span>{t("onboarding.loadDemo")}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleCreateNewProfile}
+            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+            title="Create New Profile"
+          >
+            <PlusCircle className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
       {isDemoLoaded && (
-        <div className="bg-emerald-50 border border-emerald-300 p-4 rounded-xl flex items-center justify-between gap-3 text-xs text-emerald-900 animate-in fade-in">
+        <div className="bg-emerald-50 border border-emerald-300 p-4 rounded-2xl flex items-center justify-between gap-3 text-xs text-emerald-900 animate-in fade-in">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-700 flex-shrink-0" />
             <span className="font-semibold">{t("onboarding.demoLoadedAlert")}</span>
@@ -85,15 +190,16 @@ export default function CounsellingOnboardingPage() {
           <button
             type="button"
             onClick={handleStartSession}
-            className="px-4 py-1.5 rounded-lg bg-emerald-700 text-white font-bold hover:bg-emerald-800 transition-colors flex items-center gap-1"
+            disabled={isSaving}
+            className="px-4 py-2 rounded-xl bg-emerald-700 text-white font-bold hover:bg-emerald-800 transition-colors flex items-center gap-1 shadow-xs"
           >
-            <span>{t("onboarding.startSession")}</span>
+            <span>{isSaving ? "Saving..." : t("onboarding.startSession")}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
       )}
 
-      {/* Main Multi-Step Card */}
+      {/* Main Multi-Step Form Card */}
       <div className="bg-white rounded-3xl border border-slate-200/80 shadow-md p-6 sm:p-8 space-y-6">
         {/* Progress indicator */}
         <div className="flex items-center justify-between border-b border-slate-100 pb-4">
@@ -142,7 +248,7 @@ export default function CounsellingOnboardingPage() {
                   onClick={() => updateProfile({ userType: opt.id as any })}
                   className={`p-4 rounded-2xl text-left border transition-all ${
                     profile.userType === opt.id
-                      ? "bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/30 text-emerald-950 font-bold"
+                      ? "bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/30 text-emerald-950 font-bold shadow-2xs"
                       : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
                   }`}
                 >
@@ -197,7 +303,7 @@ export default function CounsellingOnboardingPage() {
                   onClick={() => updateProfile({ education: edu })}
                   className={`p-4 rounded-2xl text-left border transition-all ${
                     profile.education === edu
-                      ? "bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/30 text-emerald-950 font-bold"
+                      ? "bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/30 text-emerald-950 font-bold shadow-2xs"
                       : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
                   }`}
                 >
@@ -232,7 +338,7 @@ export default function CounsellingOnboardingPage() {
                   onClick={() => updateProfile({ primaryInterest: interest })}
                   className={`p-4 rounded-2xl text-left border transition-all ${
                     profile.primaryInterest === interest
-                      ? "bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/30 text-emerald-950 font-bold"
+                      ? "bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/30 text-emerald-950 font-bold shadow-2xs"
                       : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
                   }`}
                 >
@@ -268,7 +374,7 @@ export default function CounsellingOnboardingPage() {
                   onChange={(e) => updateProfile({ locationDistrict: e.target.value })}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 text-sm font-medium bg-white"
                 >
-                  <option value="Pune">Pune (पुणे - Prominent Industrial Demo Hub)</option>
+                  <option value="Pune">Pune (पुणे)</option>
                   <option value="Nashik">Nashik (नाशिक)</option>
                   <option value="Nagpur">Nagpur (नागपूर)</option>
                   <option value="Satara">Satara (सातारा)</option>
@@ -300,7 +406,7 @@ export default function CounsellingOnboardingPage() {
                   onClick={() => updateProfile({ incomeBracket: bracket })}
                   className={`p-4 rounded-2xl text-left border transition-all ${
                     profile.incomeBracket === bracket
-                      ? "bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/30 text-emerald-950 font-bold"
+                      ? "bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/30 text-emerald-950 font-bold shadow-2xs"
                       : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
                   }`}
                 >
@@ -326,7 +432,7 @@ export default function CounsellingOnboardingPage() {
                 }}
                 className={`p-6 rounded-2xl text-left border transition-all ${
                   language === "mr"
-                    ? "bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/30 text-emerald-950 font-bold"
+                    ? "bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/30 text-emerald-950 font-bold shadow-2xs"
                     : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
                 }`}
               >
@@ -342,7 +448,7 @@ export default function CounsellingOnboardingPage() {
                 }}
                 className={`p-6 rounded-2xl text-left border transition-all ${
                   language === "en"
-                    ? "bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/30 text-emerald-950 font-bold"
+                    ? "bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/30 text-emerald-950 font-bold shadow-2xs"
                     : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
                 }`}
               >
@@ -374,7 +480,7 @@ export default function CounsellingOnboardingPage() {
                   onClick={() => updateProfile({ primaryConcern: concern.id as ObjectionCategory })}
                   className={`p-4 rounded-2xl text-left border transition-all ${
                     profile.primaryConcern === concern.id
-                      ? "bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/30 text-emerald-950 font-bold"
+                      ? "bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/30 text-emerald-950 font-bold shadow-2xs"
                       : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
                   }`}
                 >
@@ -385,7 +491,7 @@ export default function CounsellingOnboardingPage() {
           </div>
         )}
 
-        {/* Navigation Buttons */}
+        {/* Navigation Controls */}
         <div className="flex items-center justify-between pt-6 border-t border-slate-100">
           {step > 1 ? (
             <button
@@ -404,7 +510,7 @@ export default function CounsellingOnboardingPage() {
             <button
               type="button"
               onClick={() => setStep(step + 1)}
-              className="px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-emerald-700 hover:bg-emerald-800 shadow-sm transition-all flex items-center gap-1.5"
+              className="px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-emerald-700 hover:bg-emerald-800 shadow-xs transition-all flex items-center gap-1.5"
             >
               <span>{t("onboarding.next")}</span>
               <ArrowRight className="w-4 h-4" />
@@ -413,10 +519,11 @@ export default function CounsellingOnboardingPage() {
             <button
               type="button"
               onClick={handleStartSession}
-              className="px-8 py-3 rounded-xl font-black text-sm text-white bg-emerald-700 hover:bg-emerald-800 shadow-md shadow-emerald-900/20 hover:scale-105 transition-all flex items-center gap-2"
+              disabled={isSaving}
+              className="px-8 py-3.5 rounded-xl font-black text-sm text-white bg-emerald-700 hover:bg-emerald-800 shadow-md shadow-emerald-900/20 hover:scale-105 transition-all flex items-center gap-2"
             >
-              <Sparkles className="w-4 h-4" />
-              <span>{t("onboarding.startSession")}</span>
+              <Sparkles className="w-4 h-4 text-emerald-200" />
+              <span>{isSaving ? "Saving..." : t("onboarding.startSession")}</span>
             </button>
           )}
         </div>

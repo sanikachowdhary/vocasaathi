@@ -27,7 +27,7 @@ export default function AboutMissionPage() {
       <div className="text-center space-y-3">
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200">
           <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
-          Smart India Hackathon 2026
+          Evidence-Backed Vocational Guidance
         </span>
         <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
           {isMarathi ? "व्होकासाथीचे ध्येय व संकल्पना" : "About VocaSaathi"}
@@ -85,17 +85,17 @@ export default function AboutMissionPage() {
         </div>
       </div>
 
-      {/* Ethical AI & Prototype Disclosure */}
+      {/* Ethical AI & Data Transparency */}
       <div className="bg-amber-50 border border-amber-200/80 rounded-3xl p-8 space-y-4 text-xs text-amber-950">
         <div className="flex items-center gap-2 font-bold text-sm text-amber-900">
           <ShieldCheck className="w-5 h-5 text-amber-600" />
-          <span>Ethical AI, Data Privacy & Hackathon Disclosure</span>
+          <span>Ethical AI, Data Privacy & Benchmark Transparency</span>
         </div>
         <p className="leading-relaxed">
-          <strong>Illustrative Hackathon Dataset:</strong> All quantitative placement figures, starting salaries, and provider completion rates in this prototype represent an illustrative simulated benchmark dataset prepared for Smart India Hackathon demonstrations. They do not claim to represent official Ministry of Skill Development and Entrepreneurship (MSDE) census records.
+          <strong>Illustrative Dataset:</strong> All quantitative placement figures, starting salaries, and provider completion rates represent an illustrative simulated benchmark dataset for skills evaluation. They do not claim to represent official Ministry of Skill Development and Entrepreneurship (MSDE) census records.
         </p>
         <p className="leading-relaxed">
-          <strong>Privacy By Design:</strong> Only demographic information necessary for context matching (district, qualification, field of interest) is requested. No personal phone numbers or identifiers are stored externally.
+          <strong>Privacy By Design:</strong> Only demographic information necessary for context matching (district, qualification, field of interest) is requested. No personal phone numbers or unencrypted identifiers are stored externally.
         </p>
       </div>
 

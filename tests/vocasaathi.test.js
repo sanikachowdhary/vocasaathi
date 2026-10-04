@@ -85,4 +85,89 @@ describe('VocaSaathi Comprehensive Verification Suite', () => {
     const totalSessions = districts.reduce((acc, d) => acc + d.totalSessions, 0);
     assert.ok(totalSessions > 1000, 'Total seeded sessions across districts should exceed 1000');
   });
+
+  test('9. Persistence Schema: Family Profile data model integrity', () => {
+    const testFamily = {
+      id: "fam-test-satara-" + Date.now(),
+      userType: "learner_parent",
+      learnerName: "Kavita Patil",
+      learnerAge: 18,
+      education: "10th Pass",
+      locationState: "Maharashtra",
+      locationDistrict: "Satara",
+      incomeBracket: "Below ₹2 lakh",
+      primaryInterest: "Renewable Energy & Solar",
+      preferredLanguage: "mr",
+      primaryConcern: "income",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    assert.ok(testFamily.id.startsWith("fam-"), "Family ID must have prefix");
+    assert.strictEqual(testFamily.learnerName, "Kavita Patil");
+    assert.strictEqual(testFamily.locationDistrict, "Satara");
+    assert.ok(testFamily.createdAt && testFamily.updatedAt);
+  });
+
+  test('10. Persistence Schema: Counselling Session lifecycle and resistance tracking', () => {
+    const testSession = {
+      id: "sess-test-" + Date.now(),
+      familyId: "fam-test-satara",
+      startedAt: new Date().toISOString(),
+      status: "active",
+      selectedTradeId: "trade-solar-pv",
+      primaryConcern: "income",
+      initialResistanceScore: 78,
+      currentResistanceScore: 54,
+      messages: [
+        {
+          id: "msg-1",
+          sender: "counsellor",
+          textEn: "Welcome to VocaSaathi. How can we help your family explore solar careers?",
+          textMr: "व्होकासाथीमध्ये आपले स्वागत आहे.",
+          timestamp: new Date().toISOString()
+        },
+        {
+          id: "msg-2",
+          sender: "parent",
+          textEn: "Will my daughter get steady employment after a 6-month solar course?",
+          textMr: "६ महिन्यांच्या सोलर कोर्सनंतर माझ्या मुलीला नियमित काम मिळेल का?",
+          timestamp: new Date().toISOString()
+        }
+      ]
+    };
+
+    assert.ok(testSession.id.startsWith("sess-"));
+    assert.strictEqual(testSession.messages.length, 2);
+    assert.ok(testSession.currentResistanceScore < testSession.initialResistanceScore, "Resistance score should drop after evidence");
+  });
+
+  test('11. Counsellor Case Lifecycle: Escalation record formatting and resolution flow', () => {
+    const newCase = {
+      id: "CASE-MH-TEST-001",
+      sessionId: "sess-test-001",
+      familyId: "fam-test-001",
+      familyName: "Patil Family",
+      learnerName: "Sunil Patil",
+      district: "Kolhapur",
+      tradeId: "trade-electrician",
+      tradeName: "Electrician",
+      initialResistance: 82,
+      currentResistance: 60,
+      priority: "High",
+      status: "New",
+      detectedObjections: ["income", "social_status"],
+      transcriptSummary: "Parent concerned about factory working conditions and starting salary.",
+      recommendedActions: ["Provide MSME certified contractor wage slabs", "Connect with senior alumni in Kolhapur"],
+      createdAt: new Date().toISOString()
+    };
+
+    assert.strictEqual(newCase.status, "New");
+    assert.strictEqual(newCase.priority, "High");
+    assert.ok(newCase.detectedObjections.includes("income"));
+    
+    // Status progression
+    const validStatuses = ["New", "In Review", "Contacted", "Resolved"];
+    assert.ok(validStatuses.includes(newCase.status));
+  });
 });

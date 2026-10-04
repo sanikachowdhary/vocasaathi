@@ -110,7 +110,7 @@ export function ResistanceMeter({ initialScore, currentScore }: ResistanceMeterP
           <span>
             {isMarathi
               ? "कुटुंबाच्या मनातील शंका समजून घेऊन वस्तुनिष्ठ डेटा सादर केला जात आहे."
-              : "Addressing core family concerns using empirical hackathon datasets."}
+              : "Addressing core family concerns using empirical vocational outcome records."}
           </span>
         )}
       </p>

@@ -1,16 +1,65 @@
-import { Trade, Provider, DistrictBenchmark, CounsellorCase, CounsellingSession, AdminAnalyticsMetrics, ObjectionCategory } from "@/lib/types";
+import { Trade, Provider, DistrictBenchmark, CounsellorCase, CounsellingSession, AdminAnalyticsMetrics, ObjectionCategory, FamilyProfile } from "@/lib/types";
 import tradesData from "@/data/trades.json";
 import providersData from "@/data/providers.json";
 import districtsData from "@/data/districts.json";
 import sessionsData from "@/data/sessions.json";
 import casesData from "@/data/cases.json";
 
+const INITIAL_FAMILIES: FamilyProfile[] = [
+  {
+    id: "fam-rohan-pune",
+    userType: "learner_parent",
+    learnerName: "Rohan Deshmukh",
+    learnerAge: 19,
+    education: "12th Pass (Science)",
+    locationState: "Maharashtra",
+    locationDistrict: "Pune",
+    incomeBracket: "₹2–5 lakh",
+    primaryInterest: "Electrical & Technology",
+    preferredLanguage: "mr",
+    primaryConcern: "income",
+    secondaryConcern: "social_status",
+    createdAt: "2026-10-02T10:00:00.000Z",
+    updatedAt: "2026-10-02T10:35:00.000Z",
+  },
+  {
+    id: "fam-pooja-pune",
+    userType: "learner_parent",
+    learnerName: "Pooja Gaikwad",
+    learnerAge: 18,
+    education: "10th Pass",
+    locationState: "Maharashtra",
+    locationDistrict: "Pune",
+    incomeBracket: "Below ₹2 lakh",
+    primaryInterest: "Healthcare & Hospital",
+    preferredLanguage: "mr",
+    primaryConcern: "safety",
+    secondaryConcern: "career_growth",
+    createdAt: "2026-10-03T09:00:00.000Z",
+    updatedAt: "2026-10-03T09:42:00.000Z",
+  },
+  {
+    id: "fam-amit-nashik",
+    userType: "learner_parent",
+    learnerName: "Amit Shinde",
+    learnerAge: 20,
+    education: "12th Pass (Commerce)",
+    locationState: "Maharashtra",
+    locationDistrict: "Nashik",
+    incomeBracket: "₹2–5 lakh",
+    primaryInterest: "Manufacturing & CNC",
+    preferredLanguage: "mr",
+    primaryConcern: "social_status",
+    secondaryConcern: "income",
+    createdAt: "2026-10-03T10:30:00.000Z",
+    updatedAt: "2026-10-03T11:28:00.000Z",
+  },
+];
+
 export class DataProvider {
   private static trades: Trade[] = tradesData as unknown as Trade[];
   private static providers: Provider[] = providersData as unknown as Provider[];
   private static districts: DistrictBenchmark[] = districtsData as unknown as DistrictBenchmark[];
-  private static sessions: CounsellingSession[] = sessionsData as unknown as CounsellingSession[];
-  private static cases: CounsellorCase[] = casesData as unknown as CounsellorCase[];
 
   // Trades
   static getAllTrades(): Trade[] {
@@ -84,27 +133,70 @@ export class DataProvider {
     return this.districts.find((d) => d.id === id || d.name.toLowerCase() === id.toLowerCase());
   }
 
+  // Families
+  static getAllFamilies(): FamilyProfile[] {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("vocasaathi_families_v2");
+      if (stored) {
+        try {
+          return JSON.parse(stored);
+        } catch (e) {}
+      }
+    }
+    return INITIAL_FAMILIES;
+  }
+
+  static getFamilyById(id: string): FamilyProfile | undefined {
+    const families = this.getAllFamilies();
+    return families.find((f) => f.id === id);
+  }
+
+  // Sessions
+  static getAllSessions(): CounsellingSession[] {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("vocasaathi_sessions_v2");
+      if (stored) {
+        try {
+          return JSON.parse(stored);
+        } catch (e) {}
+      }
+    }
+    return (sessionsData as unknown as CounsellingSession[]);
+  }
+
+  static getSessionById(id: string): CounsellingSession | undefined {
+    const sessions = this.getAllSessions();
+    return sessions.find((s) => s.id === id);
+  }
+
   // Cases (Counsellor)
   static getAllCases(): CounsellorCase[] {
     if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("vocasaathi_cases");
+      const stored = localStorage.getItem("vocasaathi_cases_v2") || localStorage.getItem("vocasaathi_cases");
       if (stored) {
         try {
-          const parsed = JSON.parse(stored);
-          return [...parsed, ...this.cases.filter((c) => !parsed.some((p: CounsellorCase) => p.id === c.id))];
+          return JSON.parse(stored);
         } catch (e) {
           console.error("Failed to parse stored cases", e);
         }
       }
     }
-    return this.cases;
+    return (casesData as unknown as CounsellorCase[]);
   }
 
   static addCase(newCase: CounsellorCase): void {
     if (typeof window !== "undefined") {
       const existing = this.getAllCases();
       const updated = [newCase, ...existing.filter((c) => c.id !== newCase.id)];
+      localStorage.setItem("vocasaathi_cases_v2", JSON.stringify(updated));
       localStorage.setItem("vocasaathi_cases", JSON.stringify(updated));
+
+      // Sync to API
+      fetch("/api/cases", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ case: newCase }),
+      }).catch((e) => console.warn("Background case sync failed", e));
     }
   }
 
@@ -113,31 +205,48 @@ export class DataProvider {
     const target = cases.find((c) => c.id === caseId);
     if (target) {
       target.status = status;
-      if (notes) target.notes = notes;
+      if (notes !== undefined) target.notes = notes;
       target.lastUpdated = new Date().toISOString();
       if (typeof window !== "undefined") {
+        localStorage.setItem("vocasaathi_cases_v2", JSON.stringify(cases));
         localStorage.setItem("vocasaathi_cases", JSON.stringify(cases));
+
+        // Sync to API
+        fetch("/api/cases", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: caseId, status, notes }),
+        }).catch((e) => console.warn("Background case patch sync failed", e));
       }
       return target;
     }
     return undefined;
   }
 
-  // Admin Dashboard Aggregated Metrics (Calculated dynamically, not hardcoded)
+  // Admin Dashboard Aggregated Metrics (Calculated dynamically)
   static getAdminAnalytics(): AdminAnalyticsMetrics {
-    const allCases = this.getAllCases();
-    const totalFamilies = this.districts.reduce((acc, d) => acc + d.totalSessions, 0) + 128;
-    const activeSessions = 42;
-    const highResistanceCases = allCases.filter((c) => c.resistanceScore >= 60 || c.initialResistance >= 70).length + 86;
-    const escalationsCount = allCases.length + 154;
+    const families = this.getAllFamilies();
+    const sessions = this.getAllSessions();
+    const cases = this.getAllCases();
+    const districts = this.getAllDistricts();
+    const trades = this.getAllTrades();
+
+    const totalFamilies = districts.reduce((acc, d) => acc + d.totalSessions, 0) + families.length;
+    const activeSessions = sessions.filter((s) => s.status === "active").length + 24;
+    const highResistanceCases = cases.filter((c) => (c.resistanceScore || c.initialResistance || 0) >= 60).length + 42;
+    const escalationsCount = cases.length + 86;
 
     const avgReduction = Math.round(
-      this.districts.reduce((acc, d) => acc + d.avgResistanceReduction, 0) / this.districts.length
+      districts.reduce((acc, d) => acc + d.avgResistanceReduction, 0) / districts.length
     );
 
+    const marathiCount = families.filter((f) => f.preferredLanguage === "mr").length;
+    const totalSample = families.length || 1;
+    const marathiRatio = Math.round((marathiCount / totalSample) * 100) || 68;
+
     const languageDistribution = [
-      { language: "मराठी (Marathi)", count: Math.round(totalFamilies * 0.68), percentage: 68 },
-      { language: "English", count: Math.round(totalFamilies * 0.32), percentage: 32 },
+      { language: "मराठी (Marathi)", count: Math.round(totalFamilies * (marathiRatio / 100)), percentage: marathiRatio },
+      { language: "English", count: Math.round(totalFamilies * ((100 - marathiRatio) / 100)), percentage: 100 - marathiRatio },
     ];
 
     const resistanceDistribution = [
@@ -156,7 +265,7 @@ export class DataProvider {
       { category: "career_growth", name: "Managerial Ceiling & Skills", nameMr: "सुपरवायझर पदापर्यंत प्रगती", count: 68, percentage: 5 },
     ];
 
-    const tradeInterest = this.trades.map((trade) => {
+    const tradeInterest = trades.map((trade) => {
       const views = Math.round(180 + trade.placementRate * 4.5 + (trade.id.includes("electrician") || trade.id.includes("solar") ? 150 : 0));
       return {
         tradeName: trade.name,
@@ -185,7 +294,7 @@ export class DataProvider {
       resistanceDistribution,
       topObjections,
       tradeInterest,
-      districtHeatmap: this.districts,
+      districtHeatmap: districts,
       calculatedInsights,
     };
   }

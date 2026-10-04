@@ -15,18 +15,18 @@ export function Footer() {
           {/* Col 1: Brand & Purpose */}
           <div className="md:col-span-1 space-y-3">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold text-sm">
+              <div className="w-8 h-8 rounded-xl bg-emerald-700 flex items-center justify-center text-white font-bold text-sm">
                 VS
               </div>
               <span className="text-xl font-bold text-white tracking-tight">
                 VocaSaathi
               </span>
             </div>
-            <p className="text-sm text-slate-400 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
               {t("app.subtitle")}
             </p>
             <div className="pt-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-semibold bg-emerald-950 text-emerald-300 border border-emerald-800/60">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-950 text-emerald-300 border border-emerald-800/60">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                 {t("app.illustrativeBadge")}
               </span>
@@ -35,10 +35,10 @@ export function Footer() {
 
           {/* Col 2: Fast Navigation */}
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">
               {language === "mr" ? "नेव्हिगेशन" : "Explore Platform"}
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2.5 text-xs sm:text-sm">
               <li>
                 <Link href="/counselling" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
                   <Users className="w-3.5 h-3.5 text-slate-500" />
@@ -68,10 +68,10 @@ export function Footer() {
 
           {/* Col 3: Public Service & Admin */}
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
-              {language === "mr" ? "प्रशासन व धोरण" : "Administration"}
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">
+              {language === "mr" ? "प्रशासन व धोरण" : "Administration & Policy"}
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2.5 text-xs sm:text-sm">
               <li>
                 <Link href="/admin" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
                   <BarChart3 className="w-3.5 h-3.5 text-slate-500" />
@@ -92,16 +92,18 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Col 4: Hackathon Disclaimer */}
+          {/* Col 4: Dataset Transparency & Mission */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
-              {language === "mr" ? "हॅकाथॉन संदर्भ" : "SIH Disclaimer"}
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">
+              {language === "mr" ? "माहिती पारदर्शकता" : "Data Transparency"}
             </h4>
-            <p className="text-xs text-slate-400 leading-relaxed bg-slate-900 p-3 rounded-lg border border-slate-800">
+            <p className="text-xs text-slate-400 leading-relaxed bg-slate-900 p-3.5 rounded-xl border border-slate-800">
               {t("app.disclaimer")}
             </p>
-            <p className="text-xs text-slate-500">
-              Designed for Smart India Hackathon (SIH) — Vocational Guidance Category.
+            <p className="text-[11px] text-slate-500">
+              {language === "mr"
+                ? "स्थानिक रोजगार, वेतन आणि एनएसक्यूएफ मार्गदर्शनासाठी तयार केलेले व्यासपीठ."
+                : "Dedicated to family-first career confidence and transparent vocational outcomes."}
             </p>
           </div>
         </div>
@@ -111,7 +113,7 @@ export function Footer() {
           <p>© {new Date().getFullYear()} VocaSaathi. {language === "mr" ? "कुटुंबांना कौशल्याची खात्री देणारा साथी." : "Helping families choose skills with confidence."}</p>
           <div className="flex items-center gap-4">
             <span className="text-slate-400">
-              Built with Next.js & TypeScript
+              Evidence-First Vocational Guidance
             </span>
           </div>
         </div>

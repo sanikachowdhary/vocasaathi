@@ -35,11 +35,11 @@ export default function LandingPage() {
   return (
     <div className="space-y-16 pb-16">
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-emerald-950 via-slate-900 to-slate-950 text-white pt-12 pb-20 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
+      <section className="relative overflow-hidden bg-gradient-to-b from-emerald-950 via-slate-900 to-slate-950 text-white pt-12 sm:pt-16 pb-20 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column: Core Value Proposition */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold">
               <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
               <span>{t("hero.badge")}</span>
             </div>
@@ -56,7 +56,7 @@ export default function LandingPage() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
               <Link
                 href="/counselling"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-base text-white bg-emerald-600 hover:bg-emerald-500 shadow-lg shadow-emerald-900/30 transition-all focus:ring-2 focus:ring-emerald-400"
+                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold text-base text-white bg-emerald-600 hover:bg-emerald-500 shadow-lg shadow-emerald-900/30 transition-all focus:ring-2 focus:ring-emerald-400"
               >
                 <Users className="w-5 h-5" />
                 <span>{t("hero.startCta")}</span>
@@ -65,7 +65,7 @@ export default function LandingPage() {
 
               <Link
                 href="/explore/trades"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-base text-slate-200 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold text-base text-slate-200 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 transition-all"
               >
                 <Compass className="w-5 h-5 text-slate-400" />
                 <span>{t("hero.exploreCta")}</span>
@@ -142,7 +142,7 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              {/* 1-Click Fast Track CTA */}
+              {/* Fast Track CTA */}
               <div className="pt-2">
                 <Link
                   href="/counselling"
@@ -364,7 +364,7 @@ export default function LandingPage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredTrades.map((trade) => (
             <EvidenceCard key={trade.id} trade={trade} />
           ))}
@@ -427,7 +427,7 @@ export default function LandingPage() {
             <div className="flex flex-wrap gap-2 pt-2">
               <span className="bg-white/10 px-3 py-1 rounded-lg text-xs font-semibold">मराठी + English</span>
               <span className="bg-white/10 px-3 py-1 rounded-lg text-xs font-semibold">🔊 Speech Audio</span>
-              <span className="bg-white/10 px-3 py-1 rounded-lg text-xs font-semibold">Offline Demo Mode</span>
+              <span className="bg-white/10 px-3 py-1 rounded-lg text-xs font-semibold">100% Reliable Offline</span>
               <span className="bg-white/10 px-3 py-1 rounded-lg text-xs font-semibold">Mobile First</span>
             </div>
           </div>

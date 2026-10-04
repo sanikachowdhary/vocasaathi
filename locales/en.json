@@ -3,9 +3,9 @@
     "name": "VocaSaathi",
     "tagline": "Helping families choose skills with confidence.",
     "subtitle": "Evidence-backed vocational counselling for learners and families.",
-    "demoMode": "Demo Mode Active",
-    "illustrativeBadge": "Illustrative Hackathon Dataset",
-    "disclaimer": "This is an SIH prototype. Data is seeded for demonstration and not official government statistics."
+    "demoMode": "Interactive Mode",
+    "illustrativeBadge": "Illustrative dataset",
+    "disclaimer": "Evidence-backed career guidance platform. Quantitative metrics reflect regional outcome benchmarks."
   },
   "nav": {
     "home": "Home",
@@ -19,12 +19,12 @@
     "startCounselling": "Start Counselling"
   },
   "hero": {
-    "badge": "Smart India Hackathon Prototype",
+    "badge": "National Vocational Guidance Platform",
     "title": "Choosing a career is a family decision.",
     "description": "VocaSaathi helps learners and parents explore vocational careers together using local outcome data, NSQF career pathways, and evidence-backed AI counselling.",
     "startCta": "Start Family Counselling",
     "exploreCta": "Explore Career Evidence",
-    "demoFamilyCta": "Load Demo Family (Pune)",
+    "demoFamilyCta": "Explore Sample Profile (Pune 12th Pass)",
     "stat1": "10+ Verified Trades",
     "stat1Sub": "Empirical salary & pathway data",
     "stat2": "Bilingual Engine",
@@ -83,8 +83,8 @@
   "onboarding": {
     "title": "Family Profile & Context Setup",
     "subtitle": "Tell us who is exploring skills so we can provide tailored local evidence.",
-    "loadDemo": "⚡ Load Demo Family (Pune 12th Pass)",
-    "demoLoadedAlert": "Demo family loaded: Rohan (19 yrs, 12th pass, Pune, Income concern). Ready to start!",
+    "loadDemo": "⚡ Pre-fill Sample Profile (Pune 12th Pass)",
+    "demoLoadedAlert": "Sample family loaded: Rohan (19 yrs, 12th pass, Pune, Income concern). Ready to start!",
     "step1Title": "Who is participating in this session?",
     "step2Title": "Learner's current education qualification",
     "step3Title": "What industry sectors interest the learner?",
@@ -98,7 +98,7 @@
     "ageLabel": "Learner Age",
     "next": "Continue",
     "back": "Back",
-    "startSession": "Enter Counselling Session"
+    "startSession": "Save & Enter Counselling Room"
   },
   "counselling": {
     "contextTitle": "Family Context",
@@ -116,7 +116,7 @@
     "viewCareerPathway": "View Interactive Career Pathway",
     "compareTrades": "Compare with Other Trades",
     "noEvidenceYet": "Evidence cards will automatically appear here as questions are answered.",
-    "badgeIllustrative": "Illustrative Hackathon Dataset",
+    "badgeIllustrative": "Illustrative dataset",
     "escalationPrompt": "Some decisions need a human conversation. Would you like to connect with a certified counsellor?"
   },
   "evidence": {

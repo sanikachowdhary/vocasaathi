@@ -6,7 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "VocaSaathi — Helping Families Choose Skills with Confidence",
-  description: "Evidence-backed vocational career counselling for learners and families. Built for Smart India Hackathon.",
+  description: "Evidence-backed vocational career counselling for learners and families. Explore certified trades, regional institutes, salary benchmarks, and progression pathways.",
 };
 
 export default function RootLayout({

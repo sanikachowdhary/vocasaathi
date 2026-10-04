@@ -94,6 +94,7 @@ export interface DistrictBenchmark {
 }
 
 export interface FamilyProfile {
+  id?: string;
   userType: "learner" | "parent" | "learner_parent";
   learnerName: string;
   learnerAge: number;
@@ -105,6 +106,8 @@ export interface FamilyProfile {
   preferredLanguage: "en" | "mr";
   primaryConcern: ObjectionCategory;
   secondaryConcern?: ObjectionCategory;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface ChatMessage {
@@ -129,6 +132,7 @@ export interface ChatMessage {
 export interface CounsellorCase {
   id: string;
   sessionId: string;
+  familyId?: string;
   familyName: string;
   learnerName: string;
   learnerAge: number;
@@ -154,6 +158,7 @@ export interface CounsellorCase {
 
 export interface CounsellingSession {
   id: string;
+  familyId?: string;
   profile: FamilyProfile;
   initialResistance: number;
   currentResistance: number;
