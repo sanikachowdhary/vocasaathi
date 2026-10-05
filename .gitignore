@@ -38,3 +38,7 @@ next-env.d.ts
 
 # Runtime Database
 /data/runtime/
+
+# Recordings & Media
+/videos/
+
